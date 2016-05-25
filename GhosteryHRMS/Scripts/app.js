@@ -1,12 +1,12 @@
 ﻿var ViewModel = function () {
-
-    this.employees = ko.observableArray();
-    this.error = ko.observable();
+    var self = this;
+    self.employees = ko.observableArray();
+    self.error = ko.observable();
 
     var employeesUri = '/api/Employees/';
 
     function ajaxHelper(uri, method, data) {
-        this.error(''); // Clear error message
+        self.error(''); // Clear error message
         return $.ajax({
             type: method,
             url: uri,
@@ -14,18 +14,18 @@
             contentType: 'application/json',
             data: data ? JSON.stringify(data) : null
         }).fail(function (jqXHR, textStatus, errorThrown) {
-            this.error(errorThrown);
+            self.error(errorThrown);
         });
     }
 
-    function getEmployees() {
+    function getAllEmployees() {
         ajaxHelper(employeesUri, 'GET').done(function (data) {
-            this.employees(data);
+            self.employees(data);
         });
     }
 
     // Fetch the initial data.
-    getEmployees();
+    getAllEmployees();
 };
 
 ko.applyBindings(new ViewModel());
