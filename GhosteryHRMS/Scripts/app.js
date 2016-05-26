@@ -26,6 +26,54 @@
 
     // Fetch the initial data.
     getAllEmployees();
+
+    self.newEmployee = {
+        FirstName: ko.observable(),
+        MiddleName: ko.observable(),
+        LastName: ko.observable(),
+        SSN: ko.observable(),
+        BirthDate: ko.observable(),
+        Telephone: ko.observable(),
+        Email: ko.observable(),
+        Address1: ko.observable(),
+        Address2: ko.observable(),
+        Address3: ko.observable(),
+        City: ko.observable(),
+        State: ko.observable(),
+        Zip: ko.observable(),
+        AnnualSalary: ko.observable(),
+        Department: ko.observable(),
+        Supervisor: ko.observable(),
+        HireDate: ko.observable()
+    }
+
+    self.addEmployee = function (formElement) {
+        var employee = {
+            FirstName: self.newEmployee.FirstName(),
+            MiddleName: self.newEmployee.MiddleName(),
+            LastName: self.newEmployee.LastName(),
+            SSN: self.newEmployee.SSN(),
+            BirthDate: self.newEmployee.BirthDate(),
+            Telephone: self.newEmployee.Telephone(), 
+            Email: self.newEmployee.Email(),
+            Address1: self.newEmployee.Address1(),
+            Address2: self.newEmployee.Address2(),
+            Address3: self.newEmployee.Address3(),
+            City: self.newEmployee.City(),
+            State: self.newEmployee.State(),
+            Zip: self.newEmployee.Zip(),
+            AnnualSalary: self.newEmployee.AnnualSalary(),
+            Department: self.newEmployee.Department(),
+            Supervisor: self.newEmployee.Supervisor(),
+            HireDate: self.newEmployee.HireDate()
+        };
+
+        ajaxHelper(employeesUri, 'POST', employee).done(function (item) {
+            self.employees.push(item);
+        });
+    }
+
+    //getAllEmployees();
 };
 
 ko.applyBindings(new ViewModel());
