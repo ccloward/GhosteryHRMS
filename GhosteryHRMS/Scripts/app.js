@@ -68,12 +68,21 @@
             HireDate: self.newEmployee.HireDate()
         };
 
-        ajaxHelper(employeesUri, 'POST', employee).done(function (item) {
-            self.employees.push(item);
+        ajaxHelper(employeesUri, 'POST', employee).done(function (employee) {
+            self.employees.push(employee);
+            document.getElementById("addEmployeeForm").reset();
+        });         
+    }
+
+    self.removeEmployee = function (employee) {
+        ajaxHelper(employeesUri, 'DELETE', employee).done(function (employee) {
+            self.employees.remove(employee);
         });
     }
 
-    //getAllEmployees();
+    self.formatCurrency = function (value) {
+        return "$" + value.toFixed(2);
+    }
 };
 
 ko.applyBindings(new ViewModel());

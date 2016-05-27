@@ -12,37 +12,36 @@
         <div data-bind="foreach: employees">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h2 class="panel-title"><strong><span data-bind="text: FirstName"></span> <span data-bind="text: $data.MiddleName || ''"> </span><span data-bind="text: LastName"></span></strong></h2>
+                    <h2 class="panel-title"><strong><span data-bind="text: FirstName"></span> <span data-bind="text: MiddleName || ''"> </span><span data-bind="text: LastName"></span></strong></h2>
                 </div>
                 <div class="panel-body">
                     <div class="col-md-6"> 
-                        <div><span data-bind="text: $data.Telephone || 'Telephone?'"></span></div>
-                        <div><span data-bind="if: $data.Email"><a data-bind="attr: { href: 'mailto:' + Email }, text: Email"></a></span></div>
-                        <div><span data-bind="ifnot: $data.Email">Email?</span></div>
+                        <div><span data-bind="text: Telephone || 'Telephone?'"></span></div>
+                        <div><span data-bind="if: Email"><a data-bind="attr: { href: 'mailto:' + Email }, text: Email"></a></span></div>
+                        <div><span data-bind="ifnot: Email">Email?</span></div>
                         <br />
-                        <div><span data-bind="text: $data.Address1 || 'Address?'"></span></div>
-                        <div><span data-bind="text: $data.Address2"></span></div>
-                        <div><span data-bind="text: $data.Address3"></span></div>
+                        <div><span data-bind="text: Address1 || 'Address?'"></span></div>
+                        <div><span data-bind="text: Address2"></span></div>
+                        <div><span data-bind="text: Address3"></span></div>
                         <div>
-                            <span data-bind="text: $data.City || 'City?'"></span>,
-                            <span data-bind="text: $data.State || 'State?'"></span>
-                            <span data-bind="text: $data.Zip || 'Zip?'"></span>
+                            <span data-bind="text: City || 'City?'"></span>,
+                            <span data-bind="text: State || 'State?'"></span>
+                            <span data-bind="text: Zip || 'Zip?'"></span>
                         </div>
                         <br />
-                        <div>Birthday: <span data-bind="text: $data.BirthDate || 'Birthday?'"></span></div>
+                        <div>Birthday: <span data-bind="text: moment(BirthDate).format('LL') || 'Birthday?'"></span></div>
                         <br />
-                        <span><a href="#">You're Fired!</a></span>
-                        @*<p><a data-bind="attr: { href: Self }, click: $root.removeEmployee" class="removeEmployee ui-state-default ui-corner-all">Remove</a></p>*@
+                        @*<span><button type="button" class="btn btn-default" data-bind="click: $parent.removeEmployee">You're Fired!</button></span>*@
                     </div>
                     <div class="col-md-6">
-                        <div><strong><span data-bind="text: $data.Department || 'Department?'"></span></strong></div>    
-                        <div>Supervisor: <span data-bind="text: $data.Supervisor || 'Supervisor?'"></span></div>
+                        <div><strong><span data-bind="text: Department || 'Department?'"></span></strong></div>    
+                        <div>Supervisor: <span data-bind="text: Supervisor || 'Supervisor?'"></span></div>
                         <br />
-                        <div>SSN: <span data-bind="text: $data.SSN || 'SSN?'"></span></div>                            
-                        <div>Salary: <span data-bind="text: $data.AnnualSalary || 'Salary?'"></span></div>
-                        <div>Hire Date: <span data-bind="text: $data.HireDate || 'Hire Date?'"></span></div>
+                        <div>SSN: <span data-bind="text: SSN || 'SSN?'"></span></div>                            
+                        <div>Salary: <span data-bind="text: $parent.formatCurrency(AnnualSalary) || 'Salary?'"></span></div>
+                        <div>Hire Date: <span data-bind="text: moment(HireDate).format('LL') || 'Hire Date?'"></span></div>
                         <br />
-                        <span><a href="#">Give Raise</a></span>
+                        @*<span><a href="#">Give Raise</a></span>*@
                     </div>                    
                 </div>
             </div>
@@ -57,11 +56,11 @@
             </div>
 
             <div class="panel-body">
-                <form class="form-horizontal" data-bind="submit: addEmployee">
+                <form id="addEmployeeForm" class="form-horizontal" data-bind="submit: addEmployee">
                     <div class="form-group" data-bind="with: newEmployee">
                         <label for="inputFirstName" class="col-sm-3 control-label">First</label>
                         <div class="col-md-9">
-                            <input type="text" class="form-control" id="inputFirstName" data-bind="value:FirstName" />
+                            <input type="text" class="form-control" id="inputFirstName" data-bind="value:FirstName" required/>
                         </div>
 
                         <label for="inputMiddleName" class="col-sm-3 control-label">Middle</label>
@@ -71,22 +70,22 @@
 
                         <label for="inputLastName" class="col-sm-3 control-label">Last</label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" id="inputLastName" data-bind="value:LastName" />
+                            <input type="text" class="form-control" id="inputLastName" data-bind="value:LastName" required />
                         </div>
 
                         <label for="inputTelephone" class="col-sm-3 control-label">Telephone</label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" id="inputTelephone" data-bind="value:Telephone" />
+                            <input type="text" class="form-control" id="inputTelephone" data-bind="value:Telephone" required />
                         </div>
 
                         <label for="inputEmail" class="col-sm-3 control-label">Email</label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" id="inputEmail" data-bind="value:Email" />
+                            <input type="text" class="form-control" id="inputEmail" data-bind="value:Email" required />
                         </div>
 
                         <label for="inputAddress1" class="col-sm-3 control-label">Address1</label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" id="inputAddress1" data-bind="value:Address1" />
+                            <input type="text" class="form-control" id="inputAddress1" data-bind="value:Address1" required />
                         </div>
 
                         <label for="inputAddress2" class="col-sm-3 control-label">Address2</label>
@@ -101,51 +100,52 @@
 
                         <label for="inputCity" class="col-sm-3 control-label">City</label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" id="inputCity" data-bind="value:City" />
+                            <input type="text" class="form-control" id="inputCity" data-bind="value:City" required />
                         </div>
 
                         <label for="inputState" class="col-sm-3 control-label">State</label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" id="inputState" data-bind="value:State" />
+                            <input type="text" class="form-control" id="inputState" data-bind="value:State" required />
                         </div>
 
                         <label for="inputZip" class="col-sm-3 control-label">Zip</label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" id="inputZip" data-bind="value:Zip" />
+                            <input type="text" class="form-control" id="inputZip" data-bind="value:Zip" required />
                         </div>
 
                         <label for="inputBirthDate" class="col-sm-3 control-label">Birthday</label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" id="inputBirthDate" data-bind="value:BirthDate" />
+                            <input type="text" class="form-control" id="inputBirthDate" data-bind="value:BirthDate" required />
                         </div>
 
                         <label for="inputDepartment" class="col-sm-3 control-label">Department </label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" id="inputDepartment" data-bind="value:Department" />
+                            <input type="text" class="form-control" id="inputDepartment" data-bind="value:Department" required />
                         </div>
 
                         <label for="inputSupervisor" class="col-sm-3 control-label">Supervisor </label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" id="inputSupervisor" data-bind="value:Supervisor" />
+                            <input type="text" class="form-control" id="inputSupervisor" data-bind="value:Supervisor" required />
                         </div>
 
                         <label for="inputSSN" class="col-sm-3 control-label">SSN </label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" id="inputSSN" data-bind="value:SSN" />
+                            <input type="text" class="form-control" id="inputSSN" data-bind="value:SSN" required />
                         </div>
 
                         <label for="inputAnnualSalary" class="col-sm-3 control-label">Salary </label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" id="inputAnnualSalary" data-bind="value:AnnualSalary" />
+                            <input type="text" class="form-control" id="inputAnnualSalary" data-bind="value:AnnualSalary" required />
                         </div>
 
                         <label for="inputHireDate" class="col-sm-3 control-label">Hire Date </label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" id="inputHireDate" data-bind="value:Hire Date" />
+                            <input type="text" class="form-control" id="inputHireDate" data-bind="value:HireDate" required />
                         </div>
 
                     </div>
                     <button type="submit" class="btn btn-default">Submit</button>
+                    <button type="reset" class="btn btn-default">Clear</button>
                 </form>
             </div>
         </div>

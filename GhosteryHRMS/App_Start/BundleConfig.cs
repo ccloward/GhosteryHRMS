@@ -26,6 +26,7 @@ namespace GhosteryHRMS
 
             bundles.Add(new ScriptBundle("~/bundles/app").Include(
                       "~/Scripts/knockout-{version}.js",
+                      "~/Scripts/moment.js",
                       "~/Scripts/app.js"));
         }
     }
